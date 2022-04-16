@@ -3,7 +3,6 @@ package io.github.manuelernesto.applecardapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
@@ -196,6 +195,7 @@ fun MyTopBarDetail() {
         }
     }
 }
+
 @Composable
 fun CardDetail() {
     Column(
@@ -243,12 +243,16 @@ fun CircleBar() {
                 valueRange = 0f..maxValue,
                 colors = SliderDefaults.colors(
                     thumbColor = Color.Black,
-                    activeTrackColor = Color.Gray
+                    activeTrackColor = Gray
                 )
             )
         }
 
-        CircularIndicator(indicatorValue = value, maxIndicatorValue = maxValue)
+        CircularIndicator(
+            indicatorValue = value,
+            maxIndicatorValue = maxValue,
+            foregroundIndicatorColor = colorGenerator(value)
+        )
 
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Spacer(modifier = Modifier.size(8.dp))
@@ -292,6 +296,7 @@ fun CircleBar() {
 
 }
 
+
 @Composable
 fun CircularIndicator(
     canvasSize: Dp = 300.dp,
@@ -303,18 +308,23 @@ fun CircularIndicator(
     foregroundIndicatorStrokeWidth: Float = 70f,
 ) {
 
-    val animatedIndicatorValue = remember {
-        Animatable(initialValue = 0f)
-    }
+    var animatedIndicatorValue by remember { mutableStateOf(0f) }
+
     LaunchedEffect(key1 = indicatorValue) {
-        animatedIndicatorValue.animateTo(indicatorValue.toFloat())
+        animatedIndicatorValue = indicatorValue
     }
-    val percentage = (animatedIndicatorValue.value / maxIndicatorValue) * 100
+    val percentage = (animatedIndicatorValue / maxIndicatorValue) * 100
 
     val sweepAngle by animateFloatAsState(
         targetValue = (3.6 * percentage).toFloat(),
         animationSpec = tween(1000)
     )
+
+    val receivedValue by animateFloatAsState(
+        targetValue = indicatorValue,
+        animationSpec = tween(100)
+    )
+
 
     Column(
         modifier = Modifier
@@ -342,7 +352,7 @@ fun CircularIndicator(
             color = Color.Gray
         )
         Text(
-            text = "$${indicatorValue.round()}",
+            text = "$${receivedValue.round()}",
             fontWeight = FontWeight.ExtraBold,
             fontSize = 56.sp
         )
@@ -395,6 +405,13 @@ fun DrawScope.foregroundIndicator(
 fun Float.round(): Float {
     return (this * 100.0f).roundToInt() / 100.0f
 }
+
+fun colorGenerator(color: Float) = when {
+    color <= 50 -> Green
+    color <= 75 -> Orange
+    else -> Red
+}
+
 
 @Preview(showBackground = true)
 @Composable
