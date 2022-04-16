@@ -16,3 +16,10 @@ val Green = Color(0xFF50be3c)
 val Red = Color(0xFFf26d5f)
 val White = Color(0xFFffffff)
 val WhiteBg = Color(0xFFf2f3f8)
+
+
+fun colorGenerator(color: Float) = when {
+    color <= 50 -> Green
+    color <= 75 -> Orange
+    else -> Red
+}
