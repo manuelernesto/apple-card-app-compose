@@ -58,14 +58,15 @@ fun CircularIndicator(
     val animateCenterTextColor by animateColorAsState(
         targetValue = if (receivedValue == 0.0f)
             MaterialTheme.colors.onSurface.copy(alpha = .3f)
-        else Color.Black
+        else Color.Black, animationSpec = tween(1000)
     )
     val animateCircleColor by animateColorAsState(
         targetValue = when {
             receivedValue <= 50 -> Green
             receivedValue <= 75 -> Orange
             else -> Red
-        }
+        },
+        animationSpec = tween(1000)
     )
 
 
