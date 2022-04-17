@@ -19,7 +19,7 @@ import io.github.manuelernesto.applecardapp.ui.theme.Dark
 import io.github.manuelernesto.applecardapp.ui.theme.White
 import io.github.manuelernesto.applecardapp.ui.theme.WhiteBg
 
-/*Card Detail Starts here*/
+
 
 @Composable
 fun MyTopBarDetail() {
@@ -58,14 +58,13 @@ fun CardDetail() {
         CircleBar()
     }
 }
-/*Card Detail  Ends here*/
 
 
-/*
+
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     AppleCardAppTheme {
         CardDetail()
     }
-}*/
+}
