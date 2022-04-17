@@ -15,5 +15,3 @@ Very happy to implement this UI using just Jetpack Compose
 
 <!-- You can add more screenshots here if you like -->
 <img src="/results/gif01.gif" width="260">
-<img src="/results/img01.png" width="260">
-&emsp;<img src="/results/img01.png" width="260">
